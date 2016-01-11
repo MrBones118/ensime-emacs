@@ -209,7 +209,7 @@ If such a file is present, it will override the `ensime--classpath-file' and
           (progn
             (-when-let
                 (win (get-buffer-window (process-buffer process)))
-              (delete-window win))
+              (quit-window nil win))
             (funcall on-success-fn))
         (message "Could not create classpath file %s" classpath-file))))
    (t
@@ -366,11 +366,7 @@ defined."
 		 ;; visible.
 		 (-when-let
                      (win (get-buffer-window (process-buffer server-proc)))
-                   (cond
-                    ((window-parent)
-                     (delete-window win))
-                    (t
-                     (switch-to-prev-buffer nil t)))))
+                   (quit-window nil win)))
 	     (run-at-time
 	      "6 sec" nil 'ensime-timer-call 'ensime--retry-connect
 	      server-proc host port-fn config cache-dir))))))

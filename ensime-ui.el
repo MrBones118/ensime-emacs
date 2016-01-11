@@ -126,23 +126,23 @@
       )
     map))
 
-(defun ensime-ui-nav-quit ()
-  (interactive)
-  ;; Restore saved window information
-  (when ensime-ui-nav-restore-data
-    (destructuring-bind (nav-window selected-window old-buffer)
-	ensime-ui-nav-restore-data
-      (kill-local-variable 'ensime-ui-nav-restore-data)
-      (kill-buffer)
-      (when (eq nav-window (selected-window))
-	(cond ((and (not old-buffer) (not (one-window-p)))
-	       (delete-window nav-window))
-	      ((and old-buffer (buffer-live-p old-buffer))
-	       (set-window-buffer nav-window old-buffer))
-	      ))
-      (when (window-live-p selected-window)
-	(select-window selected-window))))
-  )
+;; (defun ensime-ui-nav-quit ()
+;;   (interactive)
+;;   ;; Restore saved window information
+;;   (when ensime-ui-nav-restore-data
+;;     (destructuring-bind (nav-window selected-window old-buffer)
+;; 	ensime-ui-nav-restore-data
+;;       (kill-local-variable 'ensime-ui-nav-restore-data)
+;;       (kill-buffer)
+;;       (when (eq nav-window (selected-window))
+;; 	(cond ((and (not old-buffer) (not (one-window-p)))
+;; 	       (delete-window nav-window))
+;; 	      ((and old-buffer (buffer-live-p old-buffer))
+;; 	       (set-window-buffer nav-window old-buffer))
+;; 	      ))
+;;       (when (window-live-p selected-window)
+;; 	(select-window selected-window))))
+;;   )
 
 
 (defun ensime-ui-show-nav-buffer (buf-or-name info &optional select conn
@@ -189,7 +189,7 @@
 	    (define-key map (kbd "M-p") 'backward-button)
 	    (define-key map (kbd ".") 'ensime-ui-nav-forward-page)
 	    (define-key map (kbd ",") 'ensime-ui-nav-backward-page)
-	    (define-key map (kbd "q") 'ensime-ui-nav-quit)
+	    (define-key map (kbd "q") 'quit-window)
 	    (use-local-map map))
 
 	  (setq ensime-buffer-connection connection)
@@ -249,4 +249,3 @@
 
 ;; Local Variables:
 ;; End:
-
